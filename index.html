@@ -1124,7 +1124,7 @@
       Классифицируй <span style="color: #38bdf8; font-weight: 800;">24 рабочих инцидента</span>.<br>
       Перетяни карточку в нужный защитный шлюз (Вверх, Вниз, Влево, Вправо).<br>
       Внимательно читай динамические подписи шлюзов для каждого инцидента.<br>
-      Ошибка = утечка данных и штраф <span class="penalty-text">+20 секунд</span>. Готов?
+      Ошибка = утечка данных и штраф <span class="penalty-text">+30 секунд</span>. Готов?
     </p>
     <button id="btn-start" class="btn-start-ciso">НАЧАТЬ СМЕНУ</button>
   </div>
@@ -1138,7 +1138,7 @@
           <div class="timer-pill" id="timer-box">
             <svg><use href="#icon-timer"></use></svg>
             <span id="timer-display">00:00</span>
-            <span class="penalty-flash" id="penalty-flash">+20с ШТРАФ!</span>
+            <span class="penalty-flash" id="penalty-flash">+30с ШТРАФ!</span>
           </div>
           <button class="btn-fs-toggle" id="btn-fullscreen" aria-label="Полноэкранный режим" title="На весь экран">
             <svg><use id="icon-fs-use" href="#icon-maximize"></use></svg>
@@ -1232,7 +1232,7 @@
         <svg><use href="#icon-alert"></use></svg>
       </div>
       <h2 class="modal-headline">УТЕЧКА ЗАБЛОКИРОВАНА!</h2>
-      <div class="modal-penalty-notice">⚠️ +20 секунд штрафного времени</div>
+      <div class="modal-penalty-notice">⚠️ +30 секунд штрафного времени</div>
       <div class="modal-reason-box" id="modal-error-text"></div>
       <button class="btn-modal-action" id="btn-continue-error">ПОНЯТЬ И УСТРАНИТЬ УЯЗВИМОСТЬ</button>
     </div>
@@ -2001,7 +2001,7 @@
         activeCard.classList.add('shake-anim');
         activeCard.overlay.style.opacity = '0';
 
-        addPenalty(20);
+        addPenalty(30);
         pauseTimer();
         updateHUD();
 
@@ -2017,12 +2017,17 @@
       document.getElementById('modal-error').classList.remove('visible');
       resumeTimer();
 
-      // Mastery Learning: ошибочная карточка возвращается в конец колоды
-      const failedCard = deck.shift();
-      deck.push(failedCard);
-
+      // Карточка остается на экране: возвращаем в исходное положение для повторной попытки
+      if (activeCard) {
+        activeCard.classList.remove('shake-anim');
+        activeCard.style.transition = 'transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), border-color 0.25s, box-shadow 0.25s';
+        activeCard.style.transform = 'translate(0, 0) rotate(0)';
+        activeCard.style.borderColor = 'var(--border-color)';
+        activeCard.style.boxShadow = 'var(--shadow-card)';
+        if (activeCard.overlay) activeCard.overlay.style.opacity = '0';
+      }
+      resetGateHighlights();
       isAnimatingCard = false;
-      createNextCard();
     });
 
     document.getElementById('btn-start').addEventListener('click', () => {
