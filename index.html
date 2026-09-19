@@ -29,7 +29,7 @@
       --color-trade: #f59e0b;   /* ВЛЕВО: Коммерческая тайна */
       --glow-trade: rgba(245, 158, 11, 0.45);
 
-      --color-state: #ef4444;   /* ВПРАВО: Гостайна и КИИ */
+      --color-state: #ef4444;   /* ВПРАВО: Гостайна и КИИ / Служебная тайна */
       --glow-state: rgba(239, 68, 68, 0.45);
 
       --shadow-card: 0 20px 45px -10px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.08);
@@ -77,7 +77,7 @@
       pointer-events: none;
     }
 
-    /* */
+    /* Стартовый экран */
     .splash-screen {
       position: fixed;
       inset: 0;
@@ -196,7 +196,7 @@
       100% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0); }
     }
 
-    /* */
+    /* Главный контейнер */
     .app-container {
       position: relative;
       z-index: 10;
@@ -228,6 +228,7 @@
       40%, 60% { transform: translate3d(6px, 0, 0); }
     }
 
+    /* Верхний HUD */
     .header-hud {
       flex-shrink: 0;
       display: flex;
@@ -366,7 +367,7 @@
       letter-spacing: 0.04em;
     }
 
-    /* */
+    /* Игровое поле и 4-секторная арена */
     .arena-board {
       flex: 1;
       position: relative;
@@ -378,7 +379,6 @@
       overflow: hidden;
     }
 
-    /* 4-СЕКТОРНОЕ РАЗДЕЛЕНИЕ ПРОСТРАНСТВА ЗА КАРТОЧКОЙ */
     .arena-sectors-backdrop {
       position: absolute;
       inset: 0;
@@ -389,47 +389,49 @@
     .sector-zone {
       position: absolute;
       inset: 0;
-      transition: background 0.25s ease, opacity 0.25s ease;
-      opacity: 0.65;
+      transition: background 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s ease, filter 0.35s ease;
+      opacity: 0.45;
+      filter: saturate(0.9);
     }
 
     .sector-up {
       clip-path: polygon(0 0, 100% 0, 50% 50%);
-      background: linear-gradient(180deg, rgba(16, 185, 129, 0.12) 0%, rgba(16, 185, 129, 0.02) 75%, transparent 100%);
+      background: radial-gradient(ellipse at 50% 0%, rgba(16, 185, 129, 0.16) 0%, rgba(16, 185, 129, 0.02) 65%, transparent 85%);
     }
 
     .sector-down {
       clip-path: polygon(0 100%, 100% 100%, 50% 50%);
-      background: linear-gradient(0deg, rgba(56, 189, 248, 0.12) 0%, rgba(56, 189, 248, 0.02) 75%, transparent 100%);
+      background: radial-gradient(ellipse at 50% 100%, rgba(56, 189, 248, 0.16) 0%, rgba(56, 189, 248, 0.02) 65%, transparent 85%);
     }
 
     .sector-left {
       clip-path: polygon(0 0, 50% 50%, 0 100%);
-      background: linear-gradient(90deg, rgba(245, 158, 11, 0.14) 0%, rgba(245, 158, 11, 0.02) 75%, transparent 100%);
+      background: radial-gradient(ellipse at 0% 50%, rgba(245, 158, 11, 0.16) 0%, rgba(245, 158, 11, 0.02) 65%, transparent 85%);
     }
 
     .sector-right {
       clip-path: polygon(100% 0, 100% 100%, 50% 50%);
-      background: linear-gradient(270deg, rgba(239, 68, 68, 0.14) 0%, rgba(239, 68, 68, 0.02) 75%, transparent 100%);
+      background: radial-gradient(ellipse at 100% 50%, rgba(239, 68, 68, 0.16) 0%, rgba(239, 68, 68, 0.02) 65%, transparent 85%);
     }
 
     .sector-zone.sector-active {
       opacity: 1;
+      filter: saturate(1.3);
     }
     .sector-up.sector-active {
-      background: linear-gradient(180deg, rgba(16, 185, 129, 0.3) 0%, rgba(16, 185, 129, 0.08) 75%, transparent 100%);
+      background: radial-gradient(ellipse at 50% 0%, rgba(16, 185, 129, 0.35) 0%, rgba(16, 185, 129, 0.1) 65%, transparent 90%);
     }
     .sector-down.sector-active {
-      background: linear-gradient(0deg, rgba(56, 189, 248, 0.3) 0%, rgba(56, 189, 248, 0.08) 75%, transparent 100%);
+      background: radial-gradient(ellipse at 50% 100%, rgba(56, 189, 248, 0.35) 0%, rgba(56, 189, 248, 0.1) 65%, transparent 90%);
     }
     .sector-left.sector-active {
-      background: linear-gradient(90deg, rgba(245, 158, 11, 0.32) 0%, rgba(245, 158, 11, 0.08) 75%, transparent 100%);
+      background: radial-gradient(ellipse at 0% 50%, rgba(245, 158, 11, 0.35) 0%, rgba(245, 158, 11, 0.1) 65%, transparent 90%);
     }
     .sector-right.sector-active {
-      background: linear-gradient(270deg, rgba(239, 68, 68, 0.32) 0%, rgba(239, 68, 68, 0.08) 75%, transparent 100%);
+      background: radial-gradient(ellipse at 100% 50%, rgba(239, 68, 68, 0.35) 0%, rgba(239, 68, 68, 0.1) 65%, transparent 90%);
     }
 
-    /* ДИАГОНАЛЬНЫЕ ЛАЗЕРНЫЕ ЛИНИИ РАЗДЕЛЕНИЯ НАПРАВЛЕНИЙ */
+    /* ДИАГОНАЛЬНЫЕ ИЗЯЩНЫЕ ЛАЗЕРНЫЕ ЛИНИИ И HUD-ВИЗИРЫ */
     .arena-laser-grid {
       position: absolute;
       inset: 0;
@@ -441,18 +443,38 @@
 
     .laser-line {
       stroke: rgba(56, 189, 248, 0.22);
-      stroke-width: 0.7;
-      stroke-dasharray: 2.5 1.5;
+      stroke-width: 0.5;
+      stroke-dasharray: 2.5 2;
+    }
+
+    .hud-bracket {
+      fill: none;
+      stroke: rgba(56, 189, 248, 0.35);
+      stroke-width: 0.75;
+      stroke-linecap: round;
+      stroke-linejoin: round;
     }
 
     .laser-center-reticle {
       fill: none;
-      stroke: rgba(56, 189, 248, 0.28);
-      stroke-width: 0.6;
-      stroke-dasharray: 1.5 1.5;
+      stroke: rgba(56, 189, 248, 0.25);
+      stroke-width: 0.45;
+      stroke-dasharray: 2 1.5;
     }
 
-    /* 4 ПЕРИФЕРИЙНЫХ ШЛЮЗА СБРОСА */
+    .laser-outer-reticle {
+      fill: none;
+      stroke: rgba(56, 189, 248, 0.12);
+      stroke-width: 0.35;
+    }
+
+    .reticle-tick {
+      stroke: rgba(56, 189, 248, 0.45);
+      stroke-width: 0.65;
+      stroke-linecap: round;
+    }
+
+    /* ИЗЯЩНЫЕ ПЕРИФЕРИЙНЫЕ ШЛЮЗЫ СБРОСА */
     .perimeter-gate {
       position: absolute;
       display: flex;
@@ -460,9 +482,14 @@
       justify-content: center;
       z-index: 6;
       pointer-events: none;
-      transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
+      transition: transform 0.28s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+                  box-shadow 0.28s ease,
+                  border-color 0.28s ease,
+                  background-color 0.28s ease,
+                  filter 0.28s ease;
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.1);
     }
 
     .perimeter-gate svg {
@@ -470,104 +497,143 @@
       fill: currentColor;
     }
 
-    /* ШЛЮЗ ВВЕРХ (СВОБОДНОЕ ИСПОЛЬЗОВАНИЕ) */
+    .gate-text-col {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      line-height: 1.15;
+    }
+
     .gate-up {
       top: 6px;
       left: 50%;
       transform: translateX(-50%);
       color: var(--color-free);
-      background: rgba(16, 185, 129, 0.16);
-      border: 1.5px solid rgba(16, 185, 129, 0.55);
-      padding: 6px 16px;
+      background: rgba(16, 185, 129, 0.1);
+      border: 1px solid rgba(16, 185, 129, 0.4);
+      padding: 5px 18px;
       border-radius: 99px;
-      gap: 7px;
-      font-size: clamp(0.72rem, 2.4vw, 0.84rem);
-      font-weight: 900;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      box-shadow: 0 4px 20px rgba(16, 185, 129, 0.25);
+      gap: 9px;
+      box-shadow: 0 4px 22px rgba(16, 185, 129, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.12);
       white-space: nowrap;
     }
-    .gate-up svg { width: 15px; height: 15px; }
+    .gate-up svg { width: 14px; height: 14px; }
+    .gate-up .bg-label {
+      font-size: clamp(0.72rem, 2.3vw, 0.82rem);
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .gate-up .bg-sublabel {
+      font-size: clamp(0.58rem, 1.8vw, 0.66rem);
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      opacity: 0.85;
+      text-transform: uppercase;
+    }
 
-    /* ШЛЮЗ ВНИЗ (ЛИЧНЫЙ АКТИВ) */
     .gate-down {
-      bottom: max(8px, env(safe-area-inset-bottom));
+      bottom: max(6px, env(safe-area-inset-bottom));
       left: 50%;
       transform: translateX(-50%);
       color: var(--color-personal);
-      background: rgba(56, 189, 248, 0.16);
-      border: 1.5px solid rgba(56, 189, 248, 0.55);
-      padding: 6px 16px;
+      background: rgba(56, 189, 248, 0.1);
+      border: 1px solid rgba(56, 189, 248, 0.4);
+      padding: 5px 18px;
       border-radius: 99px;
-      gap: 7px;
-      font-size: clamp(0.72rem, 2.4vw, 0.84rem);
-      font-weight: 900;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      box-shadow: 0 4px 20px rgba(56, 189, 248, 0.25);
+      gap: 9px;
+      box-shadow: 0 4px 22px rgba(56, 189, 248, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.12);
       white-space: nowrap;
     }
-    .gate-down svg { width: 15px; height: 15px; }
+    .gate-down svg { width: 14px; height: 14px; }
+    .gate-down .bg-label {
+      font-size: clamp(0.72rem, 2.3vw, 0.82rem);
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .gate-down .bg-sublabel {
+      font-size: clamp(0.58rem, 1.8vw, 0.66rem);
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      opacity: 0.85;
+      text-transform: uppercase;
+    }
 
-    /* ШЛЮЗ ВЛЕВО: ВЕРТИКАЛЬНАЯ КИБЕР-КОНСОЛЬ (НЕ ОБРЕЗАЕТСЯ И НЕ СЖИМАЕТСЯ) */
     .gate-left {
       left: 6px;
       top: 50%;
       transform: translateY(-50%);
       flex-direction: column;
       justify-content: space-between;
+      align-items: center;
       color: var(--color-trade);
-      background: rgba(245, 158, 11, 0.16);
-      border: 1.5px solid rgba(245, 158, 11, 0.55);
-      padding: 10px 5px;
-      border-radius: var(--radius-md);
-      box-shadow: 0 4px 22px rgba(245, 158, 11, 0.25);
-      width: 38px;
-      height: clamp(160px, 32vh, 220px);
+      background: rgba(245, 158, 11, 0.1);
+      border: 1px solid rgba(245, 158, 11, 0.4);
+      padding: 10px 4px;
+      border-radius: 99px;
+      box-shadow: 0 4px 22px rgba(245, 158, 11, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+      width: 35px;
+      height: clamp(165px, 33vh, 225px);
     }
 
-    /* ШЛЮЗ ВПРАВО: ВЕРТИКАЛЬНАЯ КИБЕР-КОНСОЛЬ (НЕ ОБРЕЗАЕТСЯ И НЕ СЖИМАЕТСЯ) */
     .gate-right {
       right: 6px;
       top: 50%;
       transform: translateY(-50%);
       flex-direction: column;
       justify-content: space-between;
+      align-items: center;
       color: var(--color-state);
-      background: rgba(239, 68, 68, 0.16);
-      border: 1.5px solid rgba(239, 68, 68, 0.55);
-      padding: 10px 5px;
-      border-radius: var(--radius-md);
-      box-shadow: 0 4px 22px rgba(239, 68, 68, 0.25);
-      width: 38px;
-      height: clamp(160px, 32vh, 220px);
+      background: rgba(239, 68, 68, 0.1);
+      border: 1px solid rgba(239, 68, 68, 0.4);
+      padding: 10px 4px;
+      border-radius: 99px;
+      box-shadow: 0 4px 22px rgba(239, 68, 68, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+      width: 35px;
+      height: clamp(165px, 33vh, 225px);
     }
 
-    .gate-vertical-text {
+    .gate-text-col.vertical {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
       writing-mode: vertical-rl;
       transform: rotate(180deg);
-      white-space: nowrap;
-      font-size: clamp(0.68rem, 2.2vw, 0.78rem);
-      font-weight: 900;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
+      gap: 5px;
       line-height: 1;
     }
 
+    .gate-left .bg-label, .gate-right .bg-label {
+      font-size: clamp(0.66rem, 2vw, 0.74rem);
+      font-weight: 900;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .gate-left .bg-sublabel, .gate-right .bg-sublabel {
+      font-size: clamp(0.55rem, 1.6vw, 0.62rem);
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      opacity: 0.85;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
     .gate-icon-mini {
-      width: 16px;
-      height: 16px;
+      width: 15px;
+      height: 15px;
     }
 
     /* Подсветка шлюза при приближении карточки */
     .perimeter-gate.gate-active {
-      filter: brightness(1.35);
+      filter: brightness(1.3);
     }
-    .gate-up.gate-active { transform: translateX(-50%) scale(1.08); box-shadow: 0 0 25px var(--glow-free); }
-    .gate-down.gate-active { transform: translateX(-50%) scale(1.08); box-shadow: 0 0 25px var(--glow-personal); }
-    .gate-left.gate-active { transform: translateY(-50%) scale(1.08); box-shadow: 0 0 25px var(--glow-trade); }
-    .gate-right.gate-active { transform: translateY(-50%) scale(1.08); box-shadow: 0 0 25px var(--glow-state); }
+    .gate-up.gate-active { transform: translateX(-50%) scale(1.06); border-color: rgba(16, 185, 129, 0.8); box-shadow: 0 0 28px var(--glow-free); }
+    .gate-down.gate-active { transform: translateX(-50%) scale(1.06); border-color: rgba(56, 189, 248, 0.8); box-shadow: 0 0 28px var(--glow-personal); }
+    .gate-left.gate-active { transform: translateY(-50%) scale(1.06); border-color: rgba(245, 158, 11, 0.8); box-shadow: 0 0 28px var(--glow-trade); }
+    .gate-right.gate-active { transform: translateY(-50%) scale(1.06); border-color: rgba(239, 68, 68, 0.8); box-shadow: 0 0 28px var(--glow-state); }
 
     /* */
     .card-slot-area {
@@ -582,7 +648,7 @@
 
     .card {
       position: absolute;
-      width: clamp(260px, 74vw, 360px);
+      width: clamp(250px, 70vw, 350px);
       height: clamp(300px, 50vh, 430px);
       min-height: 290px;
       background: radial-gradient(circle at 50% 10%, #1e2c45 0%, var(--bg-card) 100%);
@@ -687,7 +753,7 @@
       fill: currentColor;
     }
 
-    /* Индикатор-оверлей цели на карточке при смещении */
+    /* Индикатор-оверлей цели на карточке при смещении (с dynamic main & sub) */
     .card-target-overlay {
       position: absolute;
       inset: 0;
@@ -696,27 +762,39 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      gap: 10px;
-      font-size: clamp(1.2rem, 5vw, 1.6rem);
-      font-weight: 900;
-      letter-spacing: 1px;
-      text-transform: uppercase;
+      gap: 6px;
       opacity: 0;
       transition: opacity 0.15s ease;
       pointer-events: none;
-      backdrop-filter: blur(4px);
-      -webkit-backdrop-filter: blur(4px);
+      backdrop-filter: blur(5px);
+      -webkit-backdrop-filter: blur(5px);
       padding: 1.5rem;
       text-align: center;
-      word-break: normal;
       z-index: 25;
     }
 
     .card-target-overlay svg {
-      width: 48px;
-      height: 48px;
+      width: 44px;
+      height: 44px;
       fill: currentColor;
       filter: drop-shadow(0 0 10px currentColor);
+      margin-bottom: 4px;
+    }
+
+    .overlay-main-title {
+      font-size: clamp(1.15rem, 4.6vw, 1.5rem);
+      font-weight: 900;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      line-height: 1.2;
+    }
+
+    .overlay-sub-title {
+      font-size: clamp(0.78rem, 2.7vw, 0.92rem);
+      font-weight: 700;
+      opacity: 0.9;
+      letter-spacing: 0.02em;
+      line-height: 1.2;
     }
 
     /* Анимации исхода карточки */
@@ -732,7 +810,7 @@
       80% { transform: translate(10px, 0) rotate(3deg); }
     }
 
-    /* */
+    /* Модальные окна */
     .modal-backdrop {
       position: fixed;
       inset: 0;
@@ -776,14 +854,12 @@
       transform: scale(1);
     }
 
-    /* Стили модалки утечки (Ошибка) */
     .dialog-card.danger-style {
       background: #1e111a;
       border: 2px solid var(--color-state);
       box-shadow: 0 0 50px rgba(239, 68, 68, 0.4);
     }
 
-    /* Стили модалки победы (Финиш) */
     .dialog-card.success-style {
       background: #172339;
       border: 2px solid var(--color-free);
@@ -981,7 +1057,7 @@
 
   <div class="cyber-bg"></div>
 
-  <!-- -->
+  <!-- SVG Символы -->
   <svg style="display: none;">
     <defs>
       <symbol id="icon-shield-ciso" viewBox="0 0 24 24">
@@ -1033,7 +1109,7 @@
 
   <div id="text-measurer"></div>
 
-  <!-- -->
+  <!-- Экран заставки -->
   <div id="splash" class="splash-screen">
     <div class="ciso-badge-logo">
       <svg><use href="#icon-shield-ciso"></use></svg>
@@ -1046,17 +1122,14 @@
     <p class="splash-rules">
       Ты – <strong>офицер кибербезопасности (CISO)</strong> корпоративного периметра.<br>
       Классифицируй <span style="color: #38bdf8; font-weight: 800;">24 рабочих инцидента</span>.<br>
-      Перетяни карточку в нужный защитный шлюз:<br>
-      <span class="accent-up">↑ ВВЕРХ</span> – «СВОБОДНОЕ ИСПОЛЬЗОВАНИЕ»<br>
-      <span class="accent-down">↓ ВНИЗ</span> – «ЛИЧНЫЙ АКТИВ»<br>
-      <span class="accent-left">← ВЛЕВО</span> – «КОММЕРЧЕСКАЯ ТАЙНА»<br>
-      <span class="accent-right">→ ВПРАВО</span> – «ГОСТАЙНА И КИИ»<br>
+      Перетяни карточку в нужный защитный шлюз (Вверх, Вниз, Влево, Вправо).<br>
+      Внимательно читай динамические подписи шлюзов для каждого инцидента.<br>
       Ошибка = утечка данных и штраф <span class="penalty-text">+20 секунд</span>. Готов?
     </p>
     <button id="btn-start" class="btn-start-ciso">НАЧАТЬ СМЕНУ</button>
   </div>
 
-  <!-- -->
+  <!-- Главное приложение -->
   <div id="app" class="app-container">
     <header class="header-hud">
       <div class="hud-row-top">
@@ -1090,35 +1163,58 @@
         <div class="sector-zone sector-right" id="sector-right"></div>
       </div>
 
-      <!-- ЛАЗЕРНЫЕ ДИАГОНАЛИ РАЗДЕЛЕНИЯ НАПРАВЛЕНИЙ -->
+      <!-- ИЗЯЩНЫЕ ЛАЗЕРНЫЕ ДИАГОНАЛИ И HUD-РАМКА -->
       <svg class="arena-laser-grid" viewBox="0 0 100 100" preserveAspectRatio="none">
         <line x1="0" y1="0" x2="50" y2="50" class="laser-line" />
         <line x1="100" y1="0" x2="50" y2="50" class="laser-line" />
         <line x1="0" y1="100" x2="50" y2="50" class="laser-line" />
         <line x1="100" y1="100" x2="50" y2="50" class="laser-line" />
-        <circle cx="50" cy="50" r="16" class="laser-center-reticle" />
+
+        <path d="M 2.5 7 L 2.5 2.5 L 7 2.5" class="hud-bracket" />
+        <path d="M 93 2.5 L 97.5 2.5 L 97.5 7" class="hud-bracket" />
+        <path d="M 2.5 93 L 2.5 97.5 L 7 97.5" class="hud-bracket" />
+        <path d="M 97.5 93 L 97.5 97.5 L 93 97.5" class="hud-bracket" />
+
+        <circle cx="50" cy="50" r="14" class="laser-center-reticle" />
+        <circle cx="50" cy="50" r="14.8" class="laser-outer-reticle" />
+        <line x1="50" y1="33.5" x2="50" y2="35.5" class="reticle-tick" />
+        <line x1="50" y1="64.5" x2="50" y2="66.5" class="reticle-tick" />
+        <line x1="33.5" y1="50" x2="35.5" y2="50" class="reticle-tick" />
+        <line x1="64.5" y1="50" x2="66.5" y2="50" class="reticle-tick" />
       </svg>
 
-      <!-- 4 ПЕРИФЕРИЙНЫХ ШЛЮЗА КЛАССИФИКАЦИИ -->
+      <!-- 4 ПЕРИФЕРИЙНЫХ ШЛЮЗА КЛАССИФИКАЦИИ С ДИНАМИЧЕСКИМИ ЛЕЙБЛАМИ -->
       <div class="perimeter-gate gate-up" id="gate-up">
-        <svg><use href="#icon-arrow-up"></use></svg>
-        <span>СВОБОДНОЕ ИСПОЛЬЗОВАНИЕ</span>
+        <svg class="gate-icon-mini"><use href="#icon-arrow-up"></use></svg>
+        <div class="gate-text-col">
+          <span class="bg-label" id="label-up-main">СВОБОДНОЕ</span>
+          <span class="bg-sublabel" id="label-up-sub">Использование</span>
+        </div>
       </div>
 
       <div class="perimeter-gate gate-down" id="gate-down">
-        <svg><use href="#icon-arrow-down"></use></svg>
-        <span>ЛИЧНЫЙ АКТИВ (ДЕПОНИРОВАНИЕ)</span>
+        <svg class="gate-icon-mini"><use href="#icon-arrow-down"></use></svg>
+        <div class="gate-text-col">
+          <span class="bg-label" id="label-down-main">ЛИЧНЫЙ АКТИВ</span>
+          <span class="bg-sublabel" id="label-down-sub">Депонирование</span>
+        </div>
       </div>
 
       <div class="perimeter-gate gate-left" id="gate-left">
         <svg class="gate-icon-mini"><use href="#icon-arrow-left"></use></svg>
-        <span class="gate-vertical-text">КОММЕРЧЕСКАЯ ТАЙНА</span>
+        <div class="gate-text-col vertical">
+          <span class="bg-label" id="label-left-main">КОММЕРЧЕСКАЯ</span>
+          <span class="bg-sublabel" id="label-left-sub">Тайна бизнеса</span>
+        </div>
         <svg class="gate-icon-mini"><use href="#icon-lock"></use></svg>
       </div>
 
       <div class="perimeter-gate gate-right" id="gate-right">
         <svg class="gate-icon-mini"><use href="#icon-arrow-right"></use></svg>
-        <span class="gate-vertical-text">ГОСТАЙНА И КИИ</span>
+        <div class="gate-text-col vertical">
+          <span class="bg-label" id="label-right-main">ГОСТАЙНА И КИИ</span>
+          <span class="bg-sublabel" id="label-right-sub">Инфраструктура</span>
+        </div>
         <svg class="gate-icon-mini"><use href="#icon-radiation-state"></use></svg>
       </div>
 
@@ -1129,7 +1225,6 @@
     </main>
   </div>
 
-  <!-- -->
   <!-- МОДАЛЬНОЕ ОКНО ОШИБКИ КЛАССИФИКАЦИИ -->
   <div id="modal-error" class="modal-backdrop" role="dialog" aria-modal="true">
     <div class="dialog-card danger-style">
@@ -1164,7 +1259,7 @@
           <span class="val" id="stat-total-cases">24 из 24 (100%)</span>
         </div>
         <div class="summary-row">
-          <span class="label">⚠️ Предотвращено инцидентов / утечек:</span>
+          <span class="label">⚠️ Ошибок классификации:</span>
           <span class="val" id="stat-mistakes-count">0</span>
         </div>
         <div class="summary-row">
@@ -1181,128 +1276,271 @@
     </div>
   </div>
 
-  <!-- -->
   <script>
     const rawDatabase = [
       {
         "correct_category": "up",
         "situation": "Скачал фото по лицензии CC0 с фотостока и добавил в коммерческий макет презентации для клиента, не спрашивая автора.",
-        "feedback": "ОШИБКА! Это Свободное использование (Вверх). Лицензия CC0 означает полный отказ от прав. Использование в коммерции легально, рисков нарушения ст. 1259 ГК РФ нет."
+        "feedback": "ОШИБКА! Это Свободное использование (Вверх). Лицензия CC0 означает полный отказ от прав. Использование в коммерции легально, рисков нарушения ст. 1259 ГК РФ нет.",
+        "labels": {
+          "up": { "main": "СВОБОДНОЕ", "sub": "Использование" },
+          "down": { "main": "ЛИЧНЫЙ АКТИВ", "sub": "Депонирование" },
+          "left": { "main": "КОММЕРЧЕСКАЯ", "sub": "Тайна бизнеса" },
+          "right": { "main": "СЛУЖЕБНАЯ", "sub": "Тайна (ПДн)" }
+        }
       },
       {
         "correct_category": "up",
         "situation": "Вставил в обучающую презентацию для отдела абзац из чужой профильной статьи, указав имя автора и ссылку на источник.",
-        "feedback": "ОШИБКА! Это Свободное использование (Вверх). Легальное цитирование в учебных целях с указанием автора разрешено без согласия правообладателя (пп. 1 п. 1 ст. 1274 ГК РФ)."
+        "feedback": "ОШИБКА! Это Свободное использование (Вверх). Легальное цитирование в учебных целях с указанием автора разрешено без согласия правообладателя (пп. 1 п. 1 ст. 1274 ГК РФ).",
+        "labels": {
+          "up": { "main": "СВОБОДНОЕ", "sub": "Легальное цитирование" },
+          "down": { "main": "ЛИЧНЫЙ АКТИВ", "sub": "Депонирование" },
+          "left": { "main": "КОММЕРЧЕСКАЯ", "sub": "Тайна бизнеса" },
+          "right": { "main": "ГОСТАЙНА", "sub": "Секретные данные" }
+        }
       },
       {
         "correct_category": "up",
         "situation": "Скопировал текст Федерального закона из справочной системы для публикации во внутреннем регламенте компании без ссылок.",
-        "feedback": "ОШИБКА! Это Свободное использование (Вверх). Тексты законов и официальных документов РФ не являются объектами авторских прав (ст. 1259 ГК РФ). Использовать можно абсолютно свободно."
+        "feedback": "ОШИБКА! Это Свободное использование (Вверх). Тексты законов и официальных документов РФ не являются объектами авторских прав (ст. 1259 ГК РФ). Использовать можно абсолютно свободно.",
+        "labels": {
+          "up": { "main": "ОБЩЕСТВЕННОЕ", "sub": "Достояние" },
+          "down": { "main": "ЛИЧНЫЙ АКТИВ", "sub": "Депонирование" },
+          "left": { "main": "КОММЕРЧЕСКАЯ", "sub": "Тайна бизнеса" },
+          "right": { "main": "СЛУЖЕБНАЯ", "sub": "Тайна (ПДн)" }
+        }
       },
       {
         "correct_category": "up",
         "situation": "Взял известный кадр из фильма, добавил смешную подпись о дедлайнах и отправил мем в рабочий чат для разрядки обстановки.",
-        "feedback": "ОШИБКА! Это Свободное использование (Вверх). Создание мема квалифицируется как пародия. По п. 4 ст. 1274 ГК РФ согласие автора не требуется при очевидном комическом эффекте."
+        "feedback": "ОШИБКА! Это Свободное использование (Вверх). Создание мема квалифицируется как пародия. По п. 4 ст. 1274 ГК РФ согласие автора не требуется при очевидном комическом эффекте.",
+        "labels": {
+          "up": { "main": "СВОБОДНОЕ", "sub": "Пародия / Мем" },
+          "down": { "main": "ЛИЧНЫЙ АКТИВ", "sub": "Депонирование" },
+          "left": { "main": "КОММЕРЧЕСКАЯ", "sub": "Тайна бизнеса" },
+          "right": { "main": "ОБЪЕКТ КИИ", "sub": "Инфраструктура" }
+        }
       },
       {
         "correct_category": "up",
         "situation": "Включил 10-секундный скриншот новостного телесюжета в корпоративный дайджест текущих рыночных событий для рассылки.",
-        "feedback": "ОШИБКА! Это Свободное использование (Вверх). По пп. 5 п. 1 ст. 1274 ГК РФ воспроизведение материалов эфира в обзорах текущих событий в оправданном объеме является полностью легальным."
+        "feedback": "ОШИБКА! Это Свободное использование (Вверх). По пп. 5 п. 1 ст. 1274 ГК РФ воспроизведение материалов эфира в обзорах текущих событий в оправданном объеме является полностью легальным.",
+        "labels": {
+          "up": { "main": "СВОБОДНОЕ", "sub": "Инфо-обзор" },
+          "down": { "main": "ЛИЧНЫЙ АКТИВ", "sub": "Депонирование" },
+          "left": { "main": "КОММЕРЧЕСКАЯ", "sub": "Тайна бизнеса" },
+          "right": { "main": "ГОСТАЙНА", "sub": "Секретные данные" }
+        }
       },
       {
         "correct_category": "up",
         "situation": "Использовал сюжет и текст русской народной сказки для сценария новогоднего корпоративного ролика, не запрашивая прав.",
-        "feedback": "ОШИБКА! Это Свободное использование (Вверх). Произведения народного творчества (фольклор), не имеющие конкретных авторов, не охраняются авторским правом согласно ст. 1259 ГК РФ."
+        "feedback": "ОШИБКА! Это Свободное использование (Вверх). Произведения народного творчества (фольклор), не имеющие конкретных авторов, не охраняются авторским правом согласно ст. 1259 ГК РФ.",
+        "labels": {
+          "up": { "main": "СВОБОДНОЕ", "sub": "Фольклор" },
+          "down": { "main": "ЛИЧНЫЙ АКТИВ", "sub": "Депонирование" },
+          "left": { "main": "КОММЕРЧЕСКАЯ", "sub": "Тайна бизнеса" },
+          "right": { "main": "СЛУЖЕБНАЯ", "sub": "Тайна (ПДн)" }
+        }
       },
       {
         "correct_category": "down",
         "situation": "Дома на личном ПК написал скрипт, никак не связанный с работой. Хочет выложить в публичный репозиторий GitHub для портфолио.",
-        "feedback": "ОШИБКА! Это Личный актив (Вниз). По ст. 1257 ГК РФ ты автор, но до публикации задепонируй код (например, в n'RIS) для фиксации даты создания и процессуальной защиты от плагиата."
+        "feedback": "ОШИБКА! Это Личный актив (Вниз). По ст. 1257 ГК РФ ты автор, но до публикации задепонируй код (например, в n'RIS) для фиксации даты создания и процессуальной защиты от плагиата.",
+        "labels": {
+          "up": { "main": "СВОБОДНОЕ", "sub": "Использование" },
+          "down": { "main": "ЛИЧНЫЙ АКТИВ", "sub": "Требует депонирования" },
+          "left": { "main": "КОММЕРЧЕСКАЯ", "sub": "Тайна бизнеса" },
+          "right": { "main": "СЛУЖЕБНАЯ", "sub": "Тайна (ПДн)" }
+        }
       },
       {
         "correct_category": "down",
         "situation": "В свободное время нарисовал уникальный дизайн-концепт приложения. Собирается отправить его потенциальному заказчику.",
-        "feedback": "ОШИБКА! Это Личный актив (Вниз). При отправке третьим лицам есть риск кражи. Депонирование зафиксирует твой временной приоритет (ст. 1259 ГК РФ) до передачи цифрового исходника."
+        "feedback": "ОШИБКА! Это Личный актив (Вниз). При отправке третьим лицам есть риск кражи. Депонирование зафиксирует твой временной приоритет (ст. 1259 ГК РФ) до передачи цифрового исходника.",
+        "labels": {
+          "up": { "main": "СВОБОДНОЕ", "sub": "Использование" },
+          "down": { "main": "ЛИЧНЫЙ АКТИВ", "sub": "Требует депонирования" },
+          "left": { "main": "КОММЕРЧЕСКАЯ", "sub": "Тайна бизнеса" },
+          "right": { "main": "ГОСТАЙНА", "sub": "Секретные данные" }
+        }
       },
       {
         "correct_category": "down",
         "situation": "Сочинил электронный трек на синтезаторе. Планирует разослать демо-запись музыкальным лейблам на оценку.",
-        "feedback": "ОШИБКА! Это Личный актив (Вниз). ВС РФ указал, что депонирование не дает прав, но жестко фиксирует факт существования файла. Это спасет трек от пиратства при рассылке."
+        "feedback": "ОШИБКА! Это Личный актив (Вниз). ВС РФ указал, что депонирование не дает прав, но жестко фиксирует факт существования файла. Это спасет трек от пиратства при рассылке.",
+        "labels": {
+          "up": { "main": "СВОБОДНОЕ", "sub": "Использование" },
+          "down": { "main": "ЛИЧНЫЙ АКТИВ", "sub": "Требует депонирования" },
+          "left": { "main": "СЛУЖЕБНОЕ", "sub": "Произведение" },
+          "right": { "main": "ОБЪЕКТ КИИ", "sub": "Инфраструктура" }
+        }
       },
       {
         "correct_category": "down",
         "situation": "Самостоятельно разработал авторский курс (лекции, тесты) и собирается продавать его на сторонней онлайн-платформе.",
-        "feedback": "ОШИБКА! Это Личный актив (Вниз). Инфопродукты подвержены копированию. Свидетельство о депонировании обеспечит жесткую доказательную базу для суда (ст. 1257 ГК РФ) до старта продаж."
+        "feedback": "ОШИБКА! Это Личный актив (Вниз). Инфопродукты подвержены копированию. Свидетельство о депонировании обеспечит жесткую доказательную базу для суда (ст. 1257 ГК РФ) до старта продаж.",
+        "labels": {
+          "up": { "main": "СВОБОДНОЕ", "sub": "Использование" },
+          "down": { "main": "ЛИЧНЫЙ АКТИВ", "sub": "Требует депонирования" },
+          "left": { "main": "КОММЕРЧЕСКАЯ", "sub": "Тайна бизнеса" },
+          "right": { "main": "ГОСТАЙНА", "sub": "Секретные данные" }
+        }
       },
       {
         "correct_category": "down",
         "situation": "Сделал серию уникальных фото в отпуске. Планирует выставить их на продажу в цифровом виде через собственный сайт.",
-        "feedback": "ОШИБКА! Это Личный актив (Вниз). Фото охраняются по факту создания, но загрузка в ячейку депозитария надежно закрепит дату твоего авторства до фактического обнародования в сети."
+        "feedback": "ОШИБКА! Это Личный актив (Вниз). Фото охраняются по факту создания, но загрузка в ячейку депозитария надежно закрепит дату твоего авторства до фактического обнародования в сети.",
+        "labels": {
+          "up": { "main": "СВОБОДНОЕ", "sub": "Использование" },
+          "down": { "main": "ЛИЧНЫЙ АКТИВ", "sub": "Требует депонирования" },
+          "left": { "main": "КОММЕРЧЕСКАЯ", "sub": "Тайна бизнеса" },
+          "right": { "main": "СЛУЖЕБНАЯ", "sub": "Тайна (ПДн)" }
+        }
       },
       {
         "correct_category": "down",
         "situation": "Написал черновик статьи для профильного журнала, хочет дать почитать коллегам из другой компании перед публикацией.",
-        "feedback": "ОШИБКА! Это Личный актив (Вниз). До публикации текст уязвим. Депонирование (ст. 1259 ГК РФ) создаст процессуальные доказательства твоего авторства перед отправкой файла бета-ридерам."
+        "feedback": "ОШИБКА! Это Личный актив (Вниз). До публикации текст уязвим. Депонирование (ст. 1259 ГК РФ) создаст процессуальные доказательства твоего авторства перед отправкой файла бета-ридерам.",
+        "labels": {
+          "up": { "main": "СВОБОДНОЕ", "sub": "Использование" },
+          "down": { "main": "ЛИЧНЫЙ АКТИВ", "sub": "Требует депонирования" },
+          "left": { "main": "КОММЕРЧЕСКАЯ", "sub": "Тайна бизнеса" },
+          "right": { "main": "ОБЪЕКТ КИИ", "sub": "Инфраструктура" }
+        }
       },
       {
         "correct_category": "left",
         "situation": "Скинул исходный код рабочего проекта себе в Telegram, чтобы спокойно дописать модуль на выходных с домашнего ноутбука.",
-        "feedback": "ОШИБКА! Это Коммерческая тайна (Влево). Пересылка логируется DLP-системой. Итог: немедленное увольнение по ст. 81 ТК РФ и риск уголовного дела по ст. 183 УК РФ."
+        "feedback": "ОШИБКА! Это Коммерческая тайна (Влево). Пересылка логируется DLP-системой. Итог: немедленное увольнение по ст. 81 ТК РФ и риск уголовного дела по ст. 183 УК РФ.",
+        "labels": {
+          "up": { "main": "СВОБОДНОЕ", "sub": "Использование" },
+          "down": { "main": "ЛИЧНЫЙ АКТИВ", "sub": "Депонирование" },
+          "left": { "main": "КОММЕРЧЕСКАЯ", "sub": "Тайна (Код)" },
+          "right": { "main": "СЛУЖЕБНАЯ", "sub": "Тайна (ПДн)" }
+        }
       },
       {
         "correct_category": "left",
         "situation": "Отправил базу с контактами VIP-клиентов себе на личный Яндекс.Диск, чтобы поработать с обзвоном в нерабочее время.",
-        "feedback": "ОШИБКА! Это Коммерческая тайна (Влево). Выгрузка баз – это незаконное собирание актива. Наказание: увольнение (ст. 81 ТК РФ) и срок до 5 лет колонии по ч. 3 ст. 183 УК РФ (из корысти)."
+        "feedback": "ОШИБКА! Это Коммерческая тайна (Влево). Выгрузка баз — это незаконное собирание актива. Наказание: увольнение (ст. 81 ТК РФ) и срок до 5 лет колонии по ч. 3 ст. 183 УК РФ (из корысти).",
+        "labels": {
+          "up": { "main": "СВОБОДНОЕ", "sub": "Использование" },
+          "down": { "main": "ЛИЧНЫЙ АКТИВ", "sub": "Депонирование" },
+          "left": { "main": "КОММЕРЧЕСКАЯ", "sub": "Тайна (База ПДн)" },
+          "right": { "main": "ОБЪЕКТ КИИ", "sub": "Инфраструктура" }
+        }
       },
       {
         "correct_category": "left",
         "situation": "Выложил в публичный GitHub кусок кода, написанный по ТЗ работодателя в офисе, чтобы дополнить свое личное портфолио.",
-        "feedback": "ОШИБКА! Это Коммерческая тайна (Влево). Это «Служебное произведение». Исключительные права принадлежат компании (ст. 1295 ГК РФ). Публикация грозит гражданским иском и уголовным делом."
+        "feedback": "ОШИБКА! Это Коммерческая тайна (Влево). Это «Служебное произведение». Исключительные права принадлежат компании (ст. 1295 ГК РФ). Публикация грозит гражданским иском и уголовным делом.",
+        "labels": {
+          "up": { "main": "СВОБОДНОЕ", "sub": "Использование" },
+          "down": { "main": "ЛИЧНЫЙ АКТИВ", "sub": "Депонирование" },
+          "left": { "main": "СЛУЖЕБНОЕ", "sub": "Произведение" },
+          "right": { "main": "СЛУЖЕБНАЯ", "sub": "Тайна (ПДн)" }
+        }
       },
       {
         "correct_category": "left",
         "situation": "Сфотографировал на телефон и скинул другу черновик еще не подписанного NDA и договора о слиянии с конкурентом.",
-        "feedback": "ОШИБКА! Это Коммерческая тайна (Влево). Передача инсайдерских данных третьим лицам квалифицируется по ч. 2 ст. 183 УК РФ (до 4 лет тюрьмы) и влечет расторжение трудового договора."
+        "feedback": "ОШИБКА! Это Коммерческая тайна (Влево). Передача инсайдерских данных третьим лицам квалифицируется по ч. 2 ст. 183 УК РФ (до 4 лет тюрьмы) и влечет расторжение трудового договора.",
+        "labels": {
+          "up": { "main": "СВОБОДНОЕ", "sub": "Использование" },
+          "down": { "main": "ЛИЧНЫЙ АКТИВ", "sub": "Депонирование" },
+          "left": { "main": "КОММЕРЧЕСКАЯ", "sub": "Тайна (Инсайд)" },
+          "right": { "main": "ГОСТАЙНА", "sub": "Секретные данные" }
+        }
       },
       {
         "correct_category": "left",
         "situation": "В день увольнения скопировал на личную флешку маркетинговые отчеты, «чтобы остались наработки на будущее».",
-        "feedback": "ОШИБКА! Это Коммерческая тайна (Влево). Незаконное собирание сведений при прекращении доступов квалифицируется по ч. 1 ст. 183 УК РФ (хищение). Грозит штраф до 500 тыс. руб. или тюрьма."
+        "feedback": "ОШИБКА! Это Коммерческая тайна (Влево). Незаконное собирание сведений при прекращении доступов квалифицируется по ч. 1 ст. 183 УК РФ (хищение). Грозит штраф до 500 тыс. руб. или тюрьма.",
+        "labels": {
+          "up": { "main": "СВОБОДНОЕ", "sub": "Использование" },
+          "down": { "main": "ЛИЧНЫЙ АКТИВ", "sub": "Депонирование" },
+          "left": { "main": "КОММЕРЧЕСКАЯ", "sub": "Тайна бизнеса" },
+          "right": { "main": "ОБЪЕКТ КИИ", "sub": "Инфраструктура" }
+        }
       },
       {
         "correct_category": "left",
         "situation": "Использовал забытый пароль коллеги, чтобы скачать закрытый аналитический отчет из чужой директории на сервере.",
-        "feedback": "ОШИБКА! Это Коммерческая тайна (Влево). Неправомерный доступ к корпоративным данным расценивается как собирание тайны (ч. 1 ст. 183 УК РФ). Влечет жесткую уголовную ответственность."
+        "feedback": "ОШИБКА! Это Коммерческая тайна (Влево). Неправомерный доступ к корпоративным данным расценивается как собирание тайны (ч. 1 ст. 183 УК РФ). Влечет жесткую уголовную ответственность.",
+        "labels": {
+          "up": { "main": "СВОБОДНОЕ", "sub": "Использование" },
+          "down": { "main": "ЛИЧНЫЙ АКТИВ", "sub": "Депонирование" },
+          "left": { "main": "КОММЕРЧЕСКАЯ", "sub": "Тайна бизнеса" },
+          "right": { "main": "СЛУЖЕБНАЯ", "sub": "Тайна (ПДн)" }
+        }
       },
       {
         "correct_category": "right",
         "situation": "Вставил найденную на столе флешку в рабочий сервер, управляющий электросетями, чтобы просто посмотреть, чья она.",
-        "feedback": "ОШИБКА! Это Гостайна / КИИ (Вправо). Прямое нарушение правил эксплуатации КИИ. По ст. 274.1 УК РФ грозит срок до 5 лет, даже если вред инфраструктуре государства причинен по неосторожности."
+        "feedback": "ОШИБКА! Это Объект КИИ (Вправо). Прямое нарушение правил эксплуатации КИИ. По ст. 274.1 УК РФ грозит срок до 5 лет, даже если вред инфраструктуре государства причинен по неосторожности.",
+        "labels": {
+          "up": { "main": "СВОБОДНОЕ", "sub": "Использование" },
+          "down": { "main": "ЛИЧНЫЙ АКТИВ", "sub": "Депонирование" },
+          "left": { "main": "КОММЕРЧЕСКАЯ", "sub": "Тайна бизнеса" },
+          "right": { "main": "ОБЪЕКТ КИИ", "sub": "Инфраструктура" }
+        }
       },
       {
         "correct_category": "right",
         "situation": "Госслужащий отправил гражданину скан паспорта через WhatsApp для быстрого уточнения данных по заявке.",
-        "feedback": "ОШИБКА! Это Служебная тайна (Вправо). Использование иностранных мессенджеров запрещено ст. 13.11.2 КоАП РФ. Утечка ПДн влечет наказание по новой ст. 272.1 УК РФ (срок до 6 лет)."
+        "feedback": "ОШИБКА! Это Служебная тайна (Вправо). Использование иностранных мессенджеров запрещено ст. 13.11.2 КоАП РФ. Утечка ПДн влечет наказание по новой ст. 272.1 УК РФ (срок до 6 лет).",
+        "labels": {
+          "up": { "main": "СВОБОДНОЕ", "sub": "Использование" },
+          "down": { "main": "ЛИЧНЫЙ АКТИВ", "sub": "Депонирование" },
+          "left": { "main": "КОММЕРЧЕСКАЯ", "sub": "Тайна бизнеса" },
+          "right": { "main": "СЛУЖЕБНАЯ", "sub": "Тайна (ПДн)" }
+        }
       },
       {
         "correct_category": "right",
         "situation": "Из чистого любопытства зашел в корпоративную базу (ЕМИАС/ФНС), чтобы посмотреть доходы или диагнозы известного блогера.",
-        "feedback": "ОШИБКА! Это Служебная тайна (Вправо). Несанкционированный сбор ПДн с использованием служебного положения карается по ч. 2 ст. 137 и ст. 272.1 УК РФ реальным сроком. Система логирует каждый клик."
+        "feedback": "ОШИБКА! Это Служебная тайна (Вправо). Несанкционированный сбор ПДн с использованием служебного положения карается по ч. 2 ст. 137 и ст. 272.1 УК РФ реальным сроком. Система логирует каждый клик.",
+        "labels": {
+          "up": { "main": "СВОБОДНОЕ", "sub": "Использование" },
+          "down": { "main": "ЛИЧНЫЙ АКТИВ", "sub": "Депонирование" },
+          "left": { "main": "КОММЕРЧЕСКАЯ", "sub": "Тайна бизнеса" },
+          "right": { "main": "СЛУЖЕБНАЯ", "sub": "Тайна (ПДн)" }
+        }
       },
       {
         "correct_category": "right",
         "situation": "Сделал селфи для соцсетей на фоне оборудования в закрытом цеху оборонного предприятия во время прохождения стажировки.",
-        "feedback": "ОШИБКА! Это Государственная тайна (Вправо). Раскрытие режимных объектов оборонки квалифицируется по ст. 283 УК РФ. Тюремный срок до 4 лет (до 7 лет при наступлении тяжких последствий)."
+        "feedback": "ОШИБКА! Это Государственная тайна (Вправо). Раскрытие режимных объектов оборонки квалифицируется по ст. 283 УК РФ. Тюремный срок до 4 лет (до 7 лет при наступлении тяжких последствий).",
+        "labels": {
+          "up": { "main": "СВОБОДНОЕ", "sub": "Использование" },
+          "down": { "main": "ЛИЧНЫЙ АКТИВ", "sub": "Депонирование" },
+          "left": { "main": "КОММЕРЧЕСКАЯ", "sub": "Тайна бизнеса" },
+          "right": { "main": "ГОСТАЙНА", "sub": "Оборонный объект" }
+        }
       },
       {
         "correct_category": "right",
         "situation": "Переслал базу из 15 000 СНИЛС граждан подрядчику-аналитику без шифрования и уведомления Роскомнадзора об операции.",
-        "feedback": "ОШИБКА! Это Служебная тайна (Вправо). Незаконная передача компьютерной информации с ПДн (ст. 272.1 УК РФ). Компании (госоргану) грозит оборотный штраф до 500 млн руб. по ст. 13.11 КоАП РФ."
+        "feedback": "ОШИБКА! Это Служебная тайна (Вправо). Незаконная передача компьютерной информации с ПДн (ст. 272.1 УК РФ). Компании (госоргану) грозит оборотный штраф до 500 млн руб. по ст. 13.11 КоАП РФ.",
+        "labels": {
+          "up": { "main": "СВОБОДНОЕ", "sub": "Использование" },
+          "down": { "main": "ЛИЧНЫЙ АКТИВ", "sub": "Депонирование" },
+          "left": { "main": "КОММЕРЧЕСКАЯ", "sub": "Тайна бизнеса" },
+          "right": { "main": "СЛУЖЕБНАЯ", "sub": "Тайна (ПДн)" }
+        }
       },
       {
         "correct_category": "right",
         "situation": "Системный администратор в поликлинике выгрузил дамп базы пациентов на внешний жесткий диск «для бэкапа» домой.",
-        "feedback": "ОШИБКА! Это Служебная тайна (Вправо). Неправомерное копирование базы ПДн (ч. 3 ст. 272.1 УК РФ). Судами квалифицируется как преступление с использованием служебного положения. Грозит срок до 6 лет."
+        "feedback": "ОШИБКА! Это Служебная тайна (Вправо). Неправомерное копирование базы ПДн (ч. 3 ст. 272.1 УК РФ). Судами квалифицируется как преступление с использованием служебного положения. Грозит срок до 6 лет.",
+        "labels": {
+          "up": { "main": "СВОБОДНОЕ", "sub": "Использование" },
+          "down": { "main": "ЛИЧНЫЙ АКТИВ", "sub": "Депонирование" },
+          "left": { "main": "КОММЕРЧЕСКАЯ", "sub": "Тайна бизнеса" },
+          "right": { "main": "СЛУЖЕБНАЯ", "sub": "Тайна (ПДн)" }
+        }
       }
     ];
 
@@ -1449,7 +1687,6 @@
     document.addEventListener('fullscreenchange', updateFullscreenIcon);
     document.addEventListener('webkitfullscreenchange', updateFullscreenIcon);
 
-    // Блокировка системного скролла
     document.addEventListener('touchmove', (e) => {
       if (!e.target.closest('.card-body-content') && !e.target.closest('.dialog-card')) {
         e.preventDefault();
@@ -1496,6 +1733,27 @@
       }
     };
 
+    function updateZoneLabels(item) {
+      if (!item || !item.labels) return;
+      const upMain = document.getElementById('label-up-main');
+      const upSub = document.getElementById('label-up-sub');
+      const downMain = document.getElementById('label-down-main');
+      const downSub = document.getElementById('label-down-sub');
+      const leftMain = document.getElementById('label-left-main');
+      const leftSub = document.getElementById('label-left-sub');
+      const rightMain = document.getElementById('label-right-main');
+      const rightSub = document.getElementById('label-right-sub');
+
+      if (upMain) upMain.textContent = item.labels.up.main;
+      if (upSub) upSub.textContent = item.labels.up.sub;
+      if (downMain) downMain.textContent = item.labels.down.main;
+      if (downSub) downSub.textContent = item.labels.down.sub;
+      if (leftMain) leftMain.textContent = item.labels.left.main;
+      if (leftSub) leftSub.textContent = item.labels.left.sub;
+      if (rightMain) rightMain.textContent = item.labels.right.main;
+      if (rightSub) rightSub.textContent = item.labels.right.sub;
+    }
+
     function fitText(textElement, text, parentCard) {
       if (!textElement) return;
       const measurer = document.getElementById('text-measurer');
@@ -1504,7 +1762,7 @@
       let fontSize = window.innerWidth > 600 ? 21 : 18;
       
       const cardRect = parentCard ? parentCard.getBoundingClientRect() : { 
-        width: Math.min(window.innerWidth * 0.74, 360), 
+        width: Math.min(window.innerWidth * 0.7, 350), 
         height: Math.min(window.innerHeight * 0.5, 430) 
       };
       
@@ -1546,6 +1804,10 @@
       }
 
       const itemData = deck[0];
+
+      // Динамическое обновление подписей всех 4-х шлюзов под текущую ситуацию
+      updateZoneLabels(itemData);
+
       const cardEl = document.createElement('div');
       cardEl.className = 'card';
       cardEl.id = 'active-ciso-card';
@@ -1567,7 +1829,8 @@
         </div>
         <div class="card-target-overlay" id="card-target-overlay">
           <svg id="overlay-icon"><use href="#icon-shield-ciso"></use></svg>
-          <span id="overlay-label">ШЛЮЗ</span>
+          <span class="overlay-main-title" id="overlay-label-main">ШЛЮЗ</span>
+          <span class="overlay-sub-title" id="overlay-label-sub"></span>
         </div>
       `;
 
@@ -1576,11 +1839,14 @@
       const sitTextEl = cardEl.querySelector('#situation-text');
       fitText(sitTextEl, itemData.situation, cardEl);
 
+      updateZoneLabels(itemData);
+
       activeCard = cardEl;
       activeCard.itemData = itemData;
       activeCard.overlay = cardEl.querySelector('#card-target-overlay');
       activeCard.overlayIcon = cardEl.querySelector('#overlay-icon use');
-      activeCard.overlayLabel = cardEl.querySelector('#overlay-label');
+      activeCard.overlayLabelMain = cardEl.querySelector('#overlay-label-main');
+      activeCard.overlayLabelSub = cardEl.querySelector('#overlay-label-sub');
 
       init4WayDrag(activeCard);
     }
@@ -1612,16 +1878,14 @@
       const dx = currentX - startX;
       const dy = currentY - startY;
 
-      // Вращение карточки по оси X
       const rotate = dx * 0.055;
       activeCard.style.transform = `translate(${dx}px, ${dy}px) rotate(${rotate}deg)`;
 
-      // Определение направления свайпа (доминирующая ось)
       let targetKey = '';
       if (Math.abs(dx) > Math.abs(dy)) {
-        targetKey = dx > 0 ? 'right' : 'left'; // Вправо / Влево
+        targetKey = dx > 0 ? 'right' : 'left';
       } else {
-        targetKey = dy > 0 ? 'down' : 'up';    // Вниз / Вверх
+        targetKey = dy > 0 ? 'down' : 'up';
       }
 
       resetGateHighlights();
@@ -1629,10 +1893,20 @@
       // Порог визуального отображения намерения (от 35px)
       if (Math.abs(dx) > 35 || Math.abs(dy) > 35) {
         const info = targetGateInfo[targetKey];
+        const dynamicLabel = activeCard.itemData?.labels?.[targetKey];
+
         activeCard.overlay.style.opacity = '1';
-        activeCard.overlay.style.backgroundColor = 'rgba(11, 17, 32, 0.88)';
+        activeCard.overlay.style.backgroundColor = 'rgba(11, 17, 32, 0.9)';
         activeCard.overlay.style.color = info.color;
-        activeCard.overlayLabel.textContent = info.label;
+
+        if (dynamicLabel) {
+          if (activeCard.overlayLabelMain) activeCard.overlayLabelMain.textContent = dynamicLabel.main;
+          if (activeCard.overlayLabelSub) activeCard.overlayLabelSub.textContent = dynamicLabel.sub;
+        } else {
+          if (activeCard.overlayLabelMain) activeCard.overlayLabelMain.textContent = info.label;
+          if (activeCard.overlayLabelSub) activeCard.overlayLabelSub.textContent = '';
+        }
+
         activeCard.overlayIcon.setAttribute('href', info.icon);
 
         activeCard.style.borderColor = info.color;
@@ -1661,7 +1935,7 @@
 
       const dx = currentX - startX;
       const dy = currentY - startY;
-      const threshold = 65; // Порог подтверждения классификации
+      const threshold = 65;
 
       let userChoice = null;
       if (Math.abs(dx) > threshold || Math.abs(dy) > threshold) {
@@ -1675,7 +1949,6 @@
       if (userChoice) {
         validateClassification(userChoice, dx, dy);
       } else {
-        // Плавный возврат в центр, если свайп был слишком слабым
         activeCard.style.transition = 'transform 0.32s cubic-bezier(0.175, 0.885, 0.32, 1.275), border-color 0.25s, box-shadow 0.25s';
         activeCard.style.transform = 'translate(0, 0) rotate(0)';
         activeCard.style.borderColor = 'var(--border-color)';
@@ -1694,7 +1967,7 @@
       const isCorrect = (choice === item.correct_category);
 
       if (isCorrect) {
-        // УСПЕШНАЯ КЛАССИФИКАЦИЯ
+        // УСПЕХ
         playSound('success');
         if (navigator.vibrate) navigator.vibrate(30);
 
@@ -1708,14 +1981,13 @@
         activeCard.style.opacity = '0';
 
         setTimeout(() => {
-          const idx = deck.indexOf(item);
-          if (idx !== -1) deck.splice(idx, 1);
+          deck.shift();
           isAnimatingCard = false;
           createNextCard();
         }, 320);
 
       } else {
-        // ОШИБКА: УТЕЧКА ДАННЫХ
+        // ОШИБКА: Штраф +10 секунд и перемещение в конец колоды (Mastery Learning)
         mistakesTotal++;
         playSound('error');
         if (navigator.vibrate) navigator.vibrate([80, 100, 80]);
@@ -1729,7 +2001,6 @@
         activeCard.classList.add('shake-anim');
         activeCard.overlay.style.opacity = '0';
 
-        // Штраф +20 секунд
         addPenalty(20);
         pauseTimer();
         updateHUD();
@@ -1746,19 +2017,12 @@
       document.getElementById('modal-error').classList.remove('visible');
       resumeTimer();
 
-      // Оставляем текущую карточку на экране: возвращаем её в центр и сбрасываем стили ошибки
-      if (activeCard) {
-        activeCard.classList.remove('shake-anim');
-        activeCard.style.transition = 'transform 0.3s ease, border-color 0.25s, box-shadow 0.25s';
-        activeCard.style.transform = 'translate(0, 0) rotate(0)';
-        activeCard.style.borderColor = 'var(--border-color)';
-        activeCard.style.boxShadow = 'var(--shadow-card)';
-        if (activeCard.overlay) {
-          activeCard.overlay.style.opacity = '0';
-        }
-      }
-      resetGateHighlights();
+      // Mastery Learning: ошибочная карточка возвращается в конец колоды
+      const failedCard = deck.shift();
+      deck.push(failedCard);
+
       isAnimatingCard = false;
+      createNextCard();
     });
 
     document.getElementById('btn-start').addEventListener('click', () => {
@@ -1925,7 +2189,7 @@
       const stats = [
         { label: '⏱  Затраченное время смены CISO:', val: formatTime(elapsedSeconds), highlight: true },
         { label: '📁  Классифицировано инцидентов:', val: `${totalCasesCount} из ${totalCasesCount} (100%)`, highlight: false },
-        { label: '⚠️  Утечек предотвращено / ошибок:', val: `${mistakesTotal}`, highlight: false },
+        { label: '⚠️  Ошибок классификации / сбросов:', val: `${mistakesTotal}`, highlight: false },
         { label: '🛡  Квалификационный статус:', val: 'CISO CLASS A (ЭТАЛОН)', highlight: false },
         { label: '📅  Дата и время фиксации защиты:', val: new Date().toLocaleString('ru-RU'), highlight: false }
       ];
