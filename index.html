@@ -233,9 +233,10 @@
       flex-shrink: 0;
       display: flex;
       flex-direction: column;
-      padding: max(8px, env(safe-area-inset-top)) 14px 6px;
-      gap: 6px;
+      padding: max(8px, env(safe-area-inset-top)) 10px 4px;
+      gap: 5px;
       z-index: 30;
+      width: 100%;
     }
 
     .hud-row-top {
@@ -243,27 +244,31 @@
       justify-content: space-between;
       align-items: center;
       width: 100%;
-      gap: 8px;
+      gap: 6px;
+      min-width: 0;
     }
 
     .hud-tag {
-      font-size: 0.74rem;
+      font-size: clamp(0.66rem, 2.3vw, 0.74rem);
       font-weight: 800;
-      letter-spacing: 0.06em;
+      letter-spacing: 0.05em;
       text-transform: uppercase;
       color: var(--cyan-highlight);
       white-space: nowrap;
       background: rgba(56, 189, 248, 0.1);
       border: 1px solid rgba(56, 189, 248, 0.28);
-      padding: 4px 10px;
+      padding: 3px 8px;
       border-radius: 99px;
-      flex-shrink: 0;
+      flex-shrink: 1;
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     .hud-controls {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
       flex-shrink: 0;
     }
 
@@ -271,22 +276,23 @@
       position: relative;
       display: flex;
       align-items: center;
-      gap: 5px;
+      gap: 4px;
       background: rgba(30, 41, 59, 0.85);
       border: 1px solid rgba(59, 130, 246, 0.35);
       backdrop-filter: blur(8px);
       -webkit-backdrop-filter: blur(8px);
-      padding: 4px 10px;
+      padding: 3px 8px;
       border-radius: 99px;
-      font-size: 0.84rem;
+      font-size: 0.8rem;
       font-weight: 700;
       font-variant-numeric: tabular-nums;
       color: #60a5fa;
+      flex-shrink: 0;
     }
 
     .timer-pill svg {
-      width: 14px;
-      height: 14px;
+      width: 13px;
+      height: 13px;
       stroke: currentColor;
       fill: none;
     }
@@ -316,12 +322,13 @@
       justify-content: center;
       background: rgba(30, 41, 59, 0.85);
       border: 1px solid var(--border-color);
-      padding: 6px;
+      padding: 5px;
       border-radius: 99px;
       color: #cbd5e1;
       cursor: pointer;
       transition: all 0.2s ease;
       outline: none;
+      flex-shrink: 0;
     }
 
     .btn-fs-toggle:hover {
@@ -330,8 +337,8 @@
     }
 
     .btn-fs-toggle svg {
-      width: 15px;
-      height: 15px;
+      width: 14px;
+      height: 14px;
       stroke: currentColor;
       fill: none;
     }
@@ -341,30 +348,34 @@
       justify-content: space-between;
       align-items: center;
       width: 100%;
-      gap: 8px;
+      gap: 6px;
+      min-width: 0;
     }
 
     .files-counter-badge {
       display: flex;
       align-items: center;
-      gap: 6px;
-      font-size: 0.74rem;
+      gap: 5px;
+      font-size: clamp(0.66rem, 2.3vw, 0.74rem);
       font-weight: 800;
-      letter-spacing: 0.04em;
+      letter-spacing: 0.03em;
       text-transform: uppercase;
       color: #34d399;
       background: rgba(16, 185, 129, 0.12);
       border: 1px solid rgba(16, 185, 129, 0.3);
-      padding: 3px 10px;
+      padding: 3px 8px;
       border-radius: 99px;
+      flex-shrink: 0;
     }
 
     .errors-count-badge {
-      font-size: 0.72rem;
+      font-size: clamp(0.64rem, 2.1vw, 0.72rem);
       font-weight: 700;
       color: var(--text-dim);
       text-transform: uppercase;
-      letter-spacing: 0.04em;
+      letter-spacing: 0.03em;
+      white-space: nowrap;
+      flex-shrink: 0;
     }
 
     /* Игровое поле и 4-секторная арена */
@@ -374,7 +385,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      padding: 8px;
+      padding: 6px;
       min-height: 0;
       overflow: hidden;
     }
@@ -390,28 +401,28 @@
       position: absolute;
       inset: 0;
       transition: background 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s ease, filter 0.35s ease;
-      opacity: 0.45;
+      opacity: 0.4;
       filter: saturate(0.9);
     }
 
     .sector-up {
       clip-path: polygon(0 0, 100% 0, 50% 50%);
-      background: radial-gradient(ellipse at 50% 0%, rgba(16, 185, 129, 0.16) 0%, rgba(16, 185, 129, 0.02) 65%, transparent 85%);
+      background: radial-gradient(circle at 50% 0%, rgba(16, 185, 129, 0.16) 0%, rgba(16, 185, 129, 0.02) 60%, transparent 85%);
     }
 
     .sector-down {
       clip-path: polygon(0 100%, 100% 100%, 50% 50%);
-      background: radial-gradient(ellipse at 50% 100%, rgba(56, 189, 248, 0.16) 0%, rgba(56, 189, 248, 0.02) 65%, transparent 85%);
+      background: radial-gradient(circle at 50% 100%, rgba(56, 189, 248, 0.16) 0%, rgba(56, 189, 248, 0.02) 60%, transparent 85%);
     }
 
     .sector-left {
       clip-path: polygon(0 0, 50% 50%, 0 100%);
-      background: radial-gradient(ellipse at 0% 50%, rgba(245, 158, 11, 0.16) 0%, rgba(245, 158, 11, 0.02) 65%, transparent 85%);
+      background: radial-gradient(circle at 0% 50%, rgba(245, 158, 11, 0.16) 0%, rgba(245, 158, 11, 0.02) 60%, transparent 85%);
     }
 
     .sector-right {
       clip-path: polygon(100% 0, 100% 100%, 50% 50%);
-      background: radial-gradient(ellipse at 100% 50%, rgba(239, 68, 68, 0.16) 0%, rgba(239, 68, 68, 0.02) 65%, transparent 85%);
+      background: radial-gradient(circle at 100% 50%, rgba(239, 68, 68, 0.16) 0%, rgba(239, 68, 68, 0.02) 60%, transparent 85%);
     }
 
     .sector-zone.sector-active {
@@ -419,19 +430,19 @@
       filter: saturate(1.3);
     }
     .sector-up.sector-active {
-      background: radial-gradient(ellipse at 50% 0%, rgba(16, 185, 129, 0.35) 0%, rgba(16, 185, 129, 0.1) 65%, transparent 90%);
+      background: radial-gradient(circle at 50% 0%, rgba(16, 185, 129, 0.35) 0%, rgba(16, 185, 129, 0.08) 60%, transparent 90%);
     }
     .sector-down.sector-active {
-      background: radial-gradient(ellipse at 50% 100%, rgba(56, 189, 248, 0.35) 0%, rgba(56, 189, 248, 0.1) 65%, transparent 90%);
+      background: radial-gradient(circle at 50% 100%, rgba(56, 189, 248, 0.35) 0%, rgba(56, 189, 248, 0.08) 60%, transparent 90%);
     }
     .sector-left.sector-active {
-      background: radial-gradient(ellipse at 0% 50%, rgba(245, 158, 11, 0.35) 0%, rgba(245, 158, 11, 0.1) 65%, transparent 90%);
+      background: radial-gradient(circle at 0% 50%, rgba(245, 158, 11, 0.35) 0%, rgba(245, 158, 11, 0.08) 60%, transparent 90%);
     }
     .sector-right.sector-active {
-      background: radial-gradient(ellipse at 100% 50%, rgba(239, 68, 68, 0.35) 0%, rgba(239, 68, 68, 0.1) 65%, transparent 90%);
+      background: radial-gradient(circle at 100% 50%, rgba(239, 68, 68, 0.35) 0%, rgba(239, 68, 68, 0.08) 60%, transparent 90%);
     }
 
-    /* ДИАГОНАЛЬНЫЕ ИЗЯЩНЫЕ ЛАЗЕРНЫЕ ЛИНИИ И HUD-ВИЗИРЫ */
+    /* ДИАГОНАЛЬНЫЕ ЛАЗЕРНЫЕ ЛИНИИ (БЕЗ ИСКАЖЕНИЙ) */
     .arena-laser-grid {
       position: absolute;
       inset: 0;
@@ -442,36 +453,67 @@
     }
 
     .laser-line {
-      stroke: rgba(56, 189, 248, 0.22);
-      stroke-width: 0.5;
+      stroke: rgba(56, 189, 248, 0.2);
+      stroke-width: 0.6;
       stroke-dasharray: 2.5 2;
+      vector-effect: non-scaling-stroke;
     }
 
-    .hud-bracket {
-      fill: none;
-      stroke: rgba(56, 189, 248, 0.35);
-      stroke-width: 0.75;
-      stroke-linecap: round;
-      stroke-linejoin: round;
+    /* 4 НЕИСКАЖАЕМЫХ УГЛОВЫХ ВИЗИРА */
+    .hud-corner {
+      position: absolute;
+      width: 16px;
+      height: 16px;
+      border-color: rgba(56, 189, 248, 0.35);
+      border-style: solid;
+      pointer-events: none;
+      z-index: 4;
     }
+    .hud-corner-tl { top: 8px; left: 8px; border-width: 1.5px 0 0 1.5px; border-top-left-radius: 3px; }
+    .hud-corner-tr { top: 8px; right: 8px; border-width: 1.5px 1.5px 0 0; border-top-right-radius: 3px; }
+    .hud-corner-bl { bottom: 8px; left: 8px; border-width: 0 0 1.5px 1.5px; border-bottom-left-radius: 3px; }
+    .hud-corner-br { bottom: 8px; right: 8px; border-width: 0 1.5px 1.5px 0; border-bottom-right-radius: 3px; }
 
-    .laser-center-reticle {
-      fill: none;
-      stroke: rgba(56, 189, 248, 0.25);
-      stroke-width: 0.45;
-      stroke-dasharray: 2 1.5;
+    /* ЦЕНТРАЛЬНЫЙ ПРИЦЕЛ (СТРОГО 1:1, НИКОГДА НЕ ДЕФОРМИРУЕТСЯ) */
+    .arena-reticle-center {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 110px;
+      height: 110px;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      z-index: 3;
     }
-
-    .laser-outer-reticle {
-      fill: none;
-      stroke: rgba(56, 189, 248, 0.12);
-      stroke-width: 0.35;
+    .reticle-ring-outer {
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      border: 1px solid rgba(56, 189, 248, 0.12);
     }
-
-    .reticle-tick {
-      stroke: rgba(56, 189, 248, 0.45);
-      stroke-width: 0.65;
-      stroke-linecap: round;
+    .reticle-ring-inner {
+      position: absolute;
+      inset: 6px;
+      border-radius: 50%;
+      border: 1px dashed rgba(56, 189, 248, 0.26);
+    }
+    .reticle-cross-h {
+      position: absolute;
+      top: 50%;
+      left: -6px;
+      right: -6px;
+      height: 1px;
+      transform: translateY(-50%);
+      background: linear-gradient(90deg, rgba(56,189,248,0.45) 0, rgba(56,189,248,0.45) 10px, transparent 10px, transparent calc(100% - 10px), rgba(56,189,248,0.45) calc(100% - 10px), rgba(56,189,248,0.45) 100%);
+    }
+    .reticle-cross-v {
+      position: absolute;
+      left: 50%;
+      top: -6px;
+      bottom: -6px;
+      width: 1px;
+      transform: translateX(-50%);
+      background: linear-gradient(180deg, rgba(56,189,248,0.45) 0, rgba(56,189,248,0.45) 10px, transparent 10px, transparent calc(100% - 10px), rgba(56,189,248,0.45) calc(100% - 10px), rgba(56,189,248,0.45) 100%);
     }
 
     /* ИЗЯЩНЫЕ ПЕРИФЕРИЙНЫЕ ШЛЮЗЫ СБРОСА */
@@ -1133,7 +1175,7 @@
   <div id="app" class="app-container">
     <header class="header-hud">
       <div class="hud-row-top">
-        <span class="hud-tag">ТЕРМИНАЛ DLP • ЗАЩИТА ПЕРИМЕТРА</span>
+        <span class="hud-tag">ТЕРМИНАЛ DLP</span>
         <div class="hud-controls">
           <div class="timer-pill" id="timer-box">
             <svg><use href="#icon-timer"></use></svg>
@@ -1163,24 +1205,26 @@
         <div class="sector-zone sector-right" id="sector-right"></div>
       </div>
 
-      <!-- ИЗЯЩНЫЕ ЛАЗЕРНЫЕ ДИАГОНАЛИ И HUD-РАМКА -->
+      <!-- 4 НЕИСКАЖАЕМЫХ УГЛОВЫХ ВИЗИРА -->
+      <div class="hud-corner hud-corner-tl"></div>
+      <div class="hud-corner hud-corner-tr"></div>
+      <div class="hud-corner hud-corner-bl"></div>
+      <div class="hud-corner hud-corner-br"></div>
+
+      <!-- ЦЕНТРАЛЬНЫЙ НЕИСКАЖАЕМЫЙ ПРИЦЕЛ (СТРОГО 1:1, ВСЕГДА ИДЕАЛЬНЫЙ КРУГ) -->
+      <div class="arena-reticle-center">
+        <div class="reticle-ring-outer"></div>
+        <div class="reticle-ring-inner"></div>
+        <div class="reticle-cross-h"></div>
+        <div class="reticle-cross-v"></div>
+      </div>
+
+      <!-- ИЗЯЩНЫЕ ЛАЗЕРНЫЕ ДИАГОНАЛИ -->
       <svg class="arena-laser-grid" viewBox="0 0 100 100" preserveAspectRatio="none">
         <line x1="0" y1="0" x2="50" y2="50" class="laser-line" />
         <line x1="100" y1="0" x2="50" y2="50" class="laser-line" />
         <line x1="0" y1="100" x2="50" y2="50" class="laser-line" />
         <line x1="100" y1="100" x2="50" y2="50" class="laser-line" />
-
-        <path d="M 2.5 7 L 2.5 2.5 L 7 2.5" class="hud-bracket" />
-        <path d="M 93 2.5 L 97.5 2.5 L 97.5 7" class="hud-bracket" />
-        <path d="M 2.5 93 L 2.5 97.5 L 7 97.5" class="hud-bracket" />
-        <path d="M 97.5 93 L 97.5 97.5 L 93 97.5" class="hud-bracket" />
-
-        <circle cx="50" cy="50" r="14" class="laser-center-reticle" />
-        <circle cx="50" cy="50" r="14.8" class="laser-outer-reticle" />
-        <line x1="50" y1="33.5" x2="50" y2="35.5" class="reticle-tick" />
-        <line x1="50" y1="64.5" x2="50" y2="66.5" class="reticle-tick" />
-        <line x1="33.5" y1="50" x2="35.5" y2="50" class="reticle-tick" />
-        <line x1="64.5" y1="50" x2="66.5" y2="50" class="reticle-tick" />
       </svg>
 
       <!-- 4 ПЕРИФЕРИЙНЫХ ШЛЮЗА КЛАССИФИКАЦИИ С ДИНАМИЧЕСКИМИ ЛЕЙБЛАМИ -->
